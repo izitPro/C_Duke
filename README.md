@@ -1,1 +1,1 @@
-# C_Duke
+# Online Course From Duke University in C programming
