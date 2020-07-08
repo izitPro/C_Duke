@@ -1,85 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 //I've provided "min" and "max" functions in
 //case they are useful to you
 int min (int a, int b) {
-  if (a < b)
-    {
+  if (a < b) {
     return a;
-    }
-  else
-    {
-    return b;
-    }
+  }
+  return b;
 }
 int max (int a, int b) {
-  if (a > b)
-    {
-      return a;
-    }
-  else
-    {
-      return b;
-    }
+  if (a > b) {
+    return a;
+  }
+  return b;
 }
 
 //Declare your rectangle structure here!
-typedef struct
-{
+typedef struct myType{
   int x, y, width, height;
 }rectangle;
 
+
 rectangle canonicalize(rectangle r) {
-    if (r.width < 0 &&  r.height < 0)
-      {
-	//RETURNS (X,Y) AND NEW HEIGHT AND NEW WIDTH
-       	r.width =  -1 * r.width; // WIDTH = POSITIVE	
-	r.height = -1 * r.height;// HEIGHT = POSITIVE
-        r.x = r.x - r.width; // X + (-W) = BOTTOM)
-	r.y = r.y - r.height; // Y + (-Y) = BOTTOM 
-      }
-    else if (r.width < 0)
-      {
-	// REURNS (X,Y) AND NEW WIDTH (0, 7) (-4, 2)
-        r.width = -1 * r.width;;// WIDTH = POSITIVE 
-        r.x = r.x - r.width; // X + (-W) = BOTTOM -4;
-	
-      }
-    else if (r.height < 0)
-      {
-	r.height =  -1* r.height; // MAKES HEIGHT POSITIVE
-	r.y = r.y - r.height;
-        
-      }
+  //WRITE THIS FUNCTION
+  if(r.width < 0){
+    r.width = abs(r.width);
+    r.x -= r.width; 
+  }
+  if(r.height < 0){
+    r.height = abs(r.height);
+    r.y -= r.height;
+  }
   return r;
 }
+
+bool exist_Intersection(rectangle r1, rectangle r2){
+  if ((r1.x > r2.x && r1.x > (r2.x + r2.width)) || (r2.x > r1.x && r2.x > (r1.x + r1.width))){
+    return false;
+  }else if ((r1.y > r2.y && r1.y > (r2.y + r2.height)) || (r2.y > r1.y && r2.y > (r1.y + r1.height))){
+    return false;
+  }
+
+  return true;
+}
+
 rectangle intersection(rectangle r1, rectangle r2) {
-    r1 =  canonicalize(r1);
-    r2 =  canonicalize(r2);
-    rectangle R;
-  if (r1.x + r1.width < r2.x || r1.y + r1.height < r2.y || r2.y + r2.height <r1.y || r2.x+ r2.width < r1.x)
-    {
-      R.height = 0;
-      R.width = 0;
-      return R;
-    }
-    else
-      {
-	R.x = max(r1.x, r2.x);
-	R.y = max(r1.y, r2.y);
-	if (r1.width == r2.width || r1.height == r2.height)
-	  {
-	    R.width = min(r1.width, r2.width)- r1.x;
-	    R.height = min (r1.height, r2.height);
-	    return R;
-	  }
-	else
-	  {
-	    R.width = min(r1.width,  r2.width);
-	    R.height = min(r1.height,  r2.height);
-	    return R;
-          }
-  //x canonicalize (R);
+  //WRITE THIS FUNCTION
+  r1 = canonicalize(r1);
+  r2 = canonicalize(r2);
+  /*Deciding whether the intersection is possible or not*/
+  bool Ex = exist_Intersection(r1,r2);
+  if (!Ex){
+    r1.width = 0;
+    r1.height = 0;
+    return r1;
+  }
+  /*finding the upper most corner point of the intersection*/
+  int junk_width = min(r1.x + r1.width, r2.x + r2.width);
+  int junk_height = min(r1.y + r1.height, r2.y + r2.height);  
+  /*Fix r1.x and r1.y*/
+  r1.x = max(r1.x, r2.x);
+  r1.y = max(r1.y, r2.y);
+  /*Fixing the width and height of r1*/
+  r1.width = junk_width - r1.x;
+  r1.height = junk_height - r1.y;
+  return r1;
 }
 
 //You should not need to modify any code below this line
@@ -90,7 +76,7 @@ void printRectangle(rectangle r) {
   }
   else {
     printf("(%d,%d) to (%d,%d)\n", r.x, r.y, 
-	                            r.x + r.width, r.y+r.height);
+	                           r.x + r.width, r.y + r.height);
   }
 }
 
@@ -100,17 +86,17 @@ int main (void) {
   rectangle r3;
   rectangle r4;
 
-  r1.x = 2;              
-  r1.y = 3;                     
-  r1.width = 5;                
-  r1.height = 6;              
+  r1.x = 2;
+  r1.y = 3;
+  r1.width = 5;
+  r1.height = 6;
   printf("r1 is ");
   printRectangle(r1);
 
-  r2.x = 4;               
-  r2.y = 5;                  
-  r2.width = -5;             
-  r2.height = -7;            
+  r2.x = 4;
+  r2.y = 5;
+  r2.width = -5;
+  r2.height = -7;
   printf("r2 is ");
   printRectangle(r2);
   
@@ -198,4 +184,5 @@ int main (void) {
 
 
   return EXIT_SUCCESS;
+
 }
