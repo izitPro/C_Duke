@@ -1,0 +1,38 @@
+a abcde
+ab abcde
+abc abcde
+abcd abcde
+abcde abcde
+abcdef abcdef
+abcde a
+abcde ab
+abcde abc
+abcde abcd
+aaaaa aaaaa
+AAAAA AAAAA
+abc bac cba
+abcd abcd abcd
+abcde abcde abcde
+===== =====
+!!!!! !!!!!
+!~~~~ ~!~~~
+!2111 111`^
+^FGGG =fggg
+2a2a2 2b2b2
+abcde
+abcde abcdef
+abcdef abcde
+bbbba bbbba
+dddaa eeefg
+fff{= dnh$^
+aafgr aaafg
+aaafg aafgr
+aaaaa aaaad
+aaaaa aaadf
+aaaaa aafgh
+aaaaa dfghj
+aaaad aaadf
+aaaad aafgh
+aaaad afghj
+
+
