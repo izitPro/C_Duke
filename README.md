@@ -1,1 +1,3 @@
-# Online Course From Duke University in C programming
+# An extensive insight to Programming in C language
+## Duke University 
+### Coursera
